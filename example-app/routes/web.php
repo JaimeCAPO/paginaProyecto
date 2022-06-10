@@ -16,3 +16,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [ControllerPizzas::class,'index']);
 Route::get('/card',[ControllerPizzas::class,'card']);
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

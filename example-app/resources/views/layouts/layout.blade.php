@@ -7,7 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
-<body style="background-color: rgb(255, 199, 166)">
+<body style="background-color: rgba(255, 244, 238, 0.918);font-family: 'Nunito', sans-serif">
     
     @yield('title')
 
@@ -25,7 +25,25 @@
               <li class="nav-item">
                 <a class="nav-link " href="/orders">Orders</a>
               </li>  
-            </ul>
+            
+            @if (Route::has('login'))
+                    @auth
+                      <li class="nav-item">
+                        <a href="{{ url('/home') }}" class=" nav-link text-gray-700 dark:text-gray-50">ACOUNT</a>
+
+                      </li>
+                    @else
+                    <li class="nav-item">
+                        <a href="{{ route('login') }}" class="nav-link text-gray-700 dark:text-gray-500">LOG IN</a>
+                    </li>
+                        @if (Route::has('register'))
+                        <li class="nav-item">
+                            <a href="{{ route('register') }}" class="nav-link ml-4 text-gray-700 dark:text-gray-500 underline">REGISTER</a>
+                        </li>
+                        @endif
+                    @endauth
+            @endif
+          </ul>
           </div>
         </div>
         <div class="container"></div>
