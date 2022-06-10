@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/amarillo"
+    android:padding="40dp">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/tvCard"
+                android:textStyle="bold|italic"
+                android:textAlignment="center"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_margin="20dp">
+
+                <Button
+                    android:id="@+id/btnCarbonara"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:text="@string/btnCarbonara"/>
+                <Button
+                    android:id="@+id/btnMargarita"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:text="@string/btnMargarita"/>
+                <Button
+                    android:id="@+id/btnAlemana"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:text="@string/btnAlemana"/>
+
+                <Button
+                    android:id="@+id/btn4quesos"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:text="@string/btn4quesos"/>
+                <Button
+                    android:id="@+id/btnHawaiana"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:text="@string/btnHawaiana"/>
+                <Button
+                    android:id="@+id/btnChampiñones"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:text="@string/btnChampiñones"/>
+                <Button
+                    android:id="@+id/btnVegetal"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:text="@string/btnVegetal"/>
+                <Button
+                    android:id="@+id/btnCustomiced"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:text="@string/btnCustomiced"/>
+
+            </LinearLayout>
+            <Button
+                android:id="@+id/btnBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/btnExit"
+                android:onClick="back"/>
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+</LinearLayout>
