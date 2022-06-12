@@ -8,6 +8,7 @@
     android:background="@color/amarillo">
 
     <ScrollView
+        android:id="@+id/scrollviewPrincipal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 

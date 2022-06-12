@@ -8,8 +8,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -25,7 +27,7 @@ public class OrdersDescription extends AppCompatActivity {
     private TextView tvDrinks;
     private TextView tvOrderPrice;
     private TextView tvComentary;
-
+    private ScrollView miScrollView;
     private Button btnDelete;
 
     private Orders order;
@@ -37,9 +39,39 @@ public class OrdersDescription extends AppCompatActivity {
         setContentView(R.layout.activity_orders_description);
 
         Button btnDelete=(Button) findViewById(R.id.btnDelete);
+        miScrollView=(ScrollView) findViewById(R.id.scrollviewPrincipal);
+        tvPizzas = (TextView) findViewById(R.id.tvOrderPizzas);
+        tvDrinks = (TextView) findViewById(R.id.tvOrderDrinks);
 
         applyOrder();
         rellenarCampos();
+
+        miScrollView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                findViewById(R.id.tvOrderPizzas).getParent()
+                        .requestDisallowInterceptTouchEvent(false);
+                findViewById(R.id.tvOrderDrinks).getParent()
+                        .requestDisallowInterceptTouchEvent(false);
+                return false;
+            }
+        });
+
+        tvPizzas.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                v.getParent().requestDisallowInterceptTouchEvent(true);
+                return false;
+            }
+        });
+
+        tvPizzas.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                v.getParent().requestDisallowInterceptTouchEvent(true);
+                return false;
+            }
+        });
 
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override

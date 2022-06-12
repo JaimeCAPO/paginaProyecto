@@ -98,4 +98,8 @@
     <string name="etComentary">Insert here the comentary</string>
     <string name="orderCreated">Order Created Succesfully</string>
     <string name="pizzasListEmpty">You didn´t select any pizza</string>
+    <string name="questionDrink">You don\'t wanna get drink?</string>
+    <string name="dontDrink">CONTINUE</string>
+    <string name="getDrink">I WANT DRINK</string>
+    <string name="deleteOrderItem">Are you sure about delete that item?</string>
 </resources>

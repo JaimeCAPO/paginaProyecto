@@ -32,6 +32,7 @@ public class DialogDelete extends DialogFragment{
                             Log.i("DELETE", "Succesfull");
                             db.close();
                             dataBase.close();
+                            desc.finish();
                         }else{
                             Toast.makeText(desc, getString(R.string.orderNotExists), Toast.LENGTH_SHORT).show();
                         }

@@ -7,7 +7,7 @@ public class User {
     private String surname;
     private Direction direction;
     private int phoneNumber;
-    private boolean empleado=false;
+    private boolean empleado;
 
     public User(String username, String password, String name, String surname, Direction direction, int phoneNumber) {
         this.username = username;
@@ -16,16 +16,6 @@ public class User {
         this.surname = surname;
         this.direction = direction;
         this.phoneNumber = phoneNumber;
-    }
-
-    public User(String username, String password, String name, String surname, Direction direction, int phoneNumber, boolean empleado) {
-        this.username = username;
-        this.password = password;
-        this.name = name;
-        this.surname = surname;
-        this.direction = direction;
-        this.phoneNumber = phoneNumber;
-        this.empleado = empleado;
     }
 
     public boolean isEmpleado() {

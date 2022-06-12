@@ -1,15 +1,16 @@
 package com.example.pizzeria;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -37,6 +38,10 @@ public class CreateOrderScreen extends AppCompatActivity {
 
     private ArrayList<Pizza> pizzas;
     private ArrayList<Drink> drinks;
+
+    private ArrayList<Pizza> newPizzas;
+    private ArrayList<Drink> newDrinks;
+
     private User user;
     private Orders order;
 
@@ -93,6 +98,47 @@ public class CreateOrderScreen extends AppCompatActivity {
             }
         });
 
+        lvPizzas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                newPizzas= new ArrayList<Pizza>();
+                for(Pizza pizza:pizzas){
+                    if(pizza.equals(pizzas.get(i))){
+                        continue;
+                    }
+                    newPizzas.add(pizza);
+                }
+                pizzas=newPizzas;
+                ArrayList<String> pizzaSelected=new ArrayList<String>();
+                for (Pizza selPizza:newPizzas){
+                    pizzaSelected.add(selPizza.getName().trim());
+                }
+                listPizzaAdapter= new ArrayAdapter<String>(getApplicationContext(),android.R.layout.simple_list_item_1,pizzaSelected);
+                lvPizzas.setAdapter(listPizzaAdapter);
+            }
+        });
+
+        lvDrinks.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                newDrinks= new ArrayList<Drink>();
+                for(Drink drink:drinks){
+                    if(drink.equals(drinks.get(i))){
+                        continue;
+                    }
+                    newDrinks.add(drink);
+                }
+                drinks=newDrinks;
+                ArrayList<String> drinkSelected=new ArrayList<String>();
+                for (Drink drink:newDrinks){
+                    drinkSelected.add(drink.getName().trim());
+                }
+                listDrinkAdapter= new ArrayAdapter<String>(getApplicationContext(),android.R.layout.simple_list_item_1,drinkSelected);
+                lvDrinks.setAdapter(listDrinkAdapter);
+            }
+        });
+
+
         btnAddPizza=(Button) findViewById(R.id.btnAddPizza);
         btnAddDrink=(Button) findViewById(R.id.btnAddDrink);
         btnCreate=(Button) findViewById(R.id.btnCreateOrder);
@@ -121,7 +167,15 @@ public class CreateOrderScreen extends AppCompatActivity {
                 System.out.println(user);
                 System.out.println(pizzas);
                 System.out.println(drinks);
-                createOrder();
+                if (pizzas.size()!=0 && pizzas!=null){
+                    if (drinks.size()!=0 && drinks!=null){
+                        createOrder();
+                    }else{
+                        youWontDrink();
+                    }
+                }else{
+                    Toast.makeText(CreateOrderScreen.this, getString(R.string.pizzasListEmpty), Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -146,40 +200,38 @@ public class CreateOrderScreen extends AppCompatActivity {
     }
 
 
+    public void youWontDrink(){
+        DialogWantDrink wantDrink= new DialogWantDrink();
+        FragmentManager fm=getSupportFragmentManager();
+        wantDrink.show(fm,"ARE YOU SURE?");
+    }
+
     public void createOrder(){
         etComentary=(EditText) findViewById(R.id.etComentary);
-        if (pizzas.size()!=0 && pizzas!=null){
-            if (drinks.size()!=0 && drinks!=null){
-                DataBase dataBase= new DataBase(getApplicationContext());
-                SQLiteDatabase db=dataBase.getWritableDatabase();
+        DataBase dataBase= new DataBase(getApplicationContext());
+        SQLiteDatabase db=dataBase.getWritableDatabase();
 
-                db.execSQL("INSERT INTO ORDERS (username,coment) VALUES('"+user.getUsername().trim()+"','"+etComentary.getText().toString()+"')");
+        db.execSQL("INSERT INTO ORDERS (username,coment) VALUES('"+user.getUsername().trim()+"','"+etComentary.getText().toString()+"');");
 
-                Cursor cOrder=db.rawQuery("SELECT * FROM ORDERS ORDER BY idorder DESC",null);
-                if (cOrder.moveToFirst()) {
-                        order = new Orders(cOrder.getInt(0),user,pizzas,drinks,etComentary.getText().toString().trim());
-                }
-                cOrder.close();
-                for (Pizza pizza: pizzas) {
-                    db.execSQL("INSERT INTO CONTAINS (idorder,pName)VALUES(" + order.getIdPedido() + ",'" + pizza.getName() + "')");
-                }
-                for (Drink drink:drinks) {
-                    db.execSQL("INSERT INTO ADDS (idorder,dName)VALUES(" + order.getIdPedido() + ",'" + drink.getName() + "')");
-                }
-                Toast.makeText(CreateOrderScreen.this, getString(R.string.orderCreated), Toast.LENGTH_SHORT).show();
-                Log.i("CREATE_ORDER","Succesfull. Order:"+order);
-
-                db.close();
-                dataBase.close();
-                finish();
-            }else{
-                //dialog de si quiere prosegir sin bebidas.
-            }
-        }else{
-            Toast.makeText(CreateOrderScreen.this, getString(R.string.pizzasListEmpty), Toast.LENGTH_SHORT).show();
+        Cursor cOrder=db.rawQuery("SELECT * FROM ORDERS ORDER BY idorder DESC;",null);
+        if (cOrder.moveToFirst()) {
+            order = new Orders(cOrder.getInt(0),user,pizzas,drinks,etComentary.getText().toString().trim());
         }
 
+        for (Pizza pizza: pizzas) {
+            db.execSQL("INSERT INTO CONTAINS (idorder,pName)VALUES(" + order.getIdPedido() + ",'" + pizza.getName() + "');");
+        }
+        for (Drink drink:drinks) {
+            db.execSQL("INSERT INTO ADDS (idorder,dName)VALUES(" + order.getIdPedido() + ",'" + drink.getName() + "');");
+        }
+        Toast.makeText(CreateOrderScreen.this, getString(R.string.orderCreated), Toast.LENGTH_SHORT).show();
+        Log.i("CREATE_ORDER","Succesfull. Order:"+order);
+
+        db.close();
+        dataBase.close();
+        finish();
     }
+
 
     public void llenarCatalogoPizzas(){
         spinPizzas=(Spinner) findViewById(R.id.spinPizzas);
@@ -253,6 +305,30 @@ public class CreateOrderScreen extends AppCompatActivity {
         }
         db.close();
         dataBase.close();
+    }
+
+    public ArrayList<Pizza> getPizzas() {
+        return pizzas;
+    }
+
+    public void setPizzas(ArrayList<Pizza> pizzas) {
+        this.pizzas = pizzas;
+    }
+
+    public ArrayList<Drink> getDrinks() {
+        return drinks;
+    }
+
+    public void setDrinks(ArrayList<Drink> drinks) {
+        this.drinks = drinks;
+    }
+
+    public ArrayList<Pizza> getNewPizzas() {
+        return newPizzas;
+    }
+
+    public ArrayList<Drink> getNewDrinks() {
+        return newDrinks;
     }
 
     public void back(View view) {

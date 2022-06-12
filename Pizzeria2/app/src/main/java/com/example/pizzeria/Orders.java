@@ -103,8 +103,7 @@ public class Orders {
         Orders.place = place;
     }
 
-    @Override
-    public String toString() {
+    public String orderDescription() {
         return "Orders{" +
                 "idPedido=" + idPedido +
                 ", userPedido=" + userPedido +
@@ -113,5 +112,9 @@ public class Orders {
                 ", coment='" + coment + '\'' +
                 ", price=" + price +
                 '}';
+    }
+    @Override
+    public String toString(){
+        return "Order "+idPedido+" -- Price:"+price+"€";
     }
 }
