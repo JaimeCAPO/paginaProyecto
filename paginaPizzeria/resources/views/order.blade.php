@@ -25,9 +25,7 @@ $price = 0.0;
                     $addsAr = DB::table('adds')
                         ->where('orders_id', $order->id)
                         ->get();
-                    $directionAr = DB::table('direction')
-                        ->where('id', $order->id)
-                        ->get();
+                    $directionAr = DB::table('direction')->get()->where('id', $order->direction_id);
                     $pizzasAr = DB::table('pizza')->get();
                     $drinksAr = DB::table('drink')->get();
                     ?>
@@ -61,6 +59,7 @@ $price = 0.0;
                         
                         ?>
                         <p>{{ $listPizzas }}</p>
+                        {{ $listPizzas="" }}
                         <h2>Ordered Drinks</h2>
                         <?php
                         if ($addsAr->count()) {
@@ -77,6 +76,7 @@ $price = 0.0;
                         }
                         ?>
                         <p>{{ $listDrinks }}</p>
+                        {{$listDrinks=""}}
                         <h2>Coment</h2>
                         @if (empty($order->coment))
                             <p>That order don't have coments</p>
