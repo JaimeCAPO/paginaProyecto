@@ -12,7 +12,6 @@ $price = 0.0;
     <div class="container mt-5">
         <h1 class="text-center">Orders List</h1>
         @forelse  ($orders as $order)
-            @if ($order->id == Auth::user()->id)
                 <div class="offcanvas offcanvas-end" id="demo{{$order->id}}">
                     <div class="offcanvas-header">
                         <h1 class="offcanvas-title">Order Nº{{ $order->id }}</h1>
@@ -120,12 +119,12 @@ $price = 0.0;
                 <?php
                 $contadorPedidos = $contadorPedidos + 1;
                 ?>
-            @endif
         @empty
             <div class="alert alert-danger alert-dismissible mt-5 mb-5">
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                 <strong>Uips!!!</strong> We don't have any order.
             </div>
+
         @endforelse
 
         <?php

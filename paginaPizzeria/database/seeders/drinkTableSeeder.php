@@ -44,5 +44,10 @@ class drinkTableSeeder extends Seeder
         $drink->dName ='1906';
         $drink->price=2.50;
         $drink->save();  
+
+        $drink=new Drink();
+        $drink->dName ='~None~';
+        $drink->price=0.00;
+        $drink->save(); 
     }
 }

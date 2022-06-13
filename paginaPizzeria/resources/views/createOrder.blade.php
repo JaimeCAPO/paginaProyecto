@@ -31,7 +31,6 @@
                     
                     <label for="pizzaL" class="form-label"><b>Pizza List:</b></label>
                     <select class="form-select form-select-lg mb-3" name="pizzaL">
-                        <option selected>~None~</option>
                         @foreach ($pizzas as $pizza)
                             <option>{{$pizza->pName}}</option>
                         @endforeach

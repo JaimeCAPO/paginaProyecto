@@ -93,13 +93,10 @@ class ControllerPizzas extends Controller
         $contains->pName=request('pizzaL');
         $contains->save();
 
+
         $adds=new Adds();
         $adds->orders_id=$lastOrder->id;
-        if(request("drinkL") != "~None~"){
-            $adds->dName=request("drinkL");
-        }else{
-            $adds->dName=null;
-        }
+        $adds->dName=trim(request("drinkL"));
         $adds->save();
 
         $orders = DB::table('orders')->get();
